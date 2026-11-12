@@ -1,18 +1,30 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Axios } from "axios";
 
-function LoginPage() {
-
+export default function LoginPage() {
     const [user, setUser] = React.useState({
         email: "",
         password: "",
     })
+    const router = useRouter();
+    const [buttonDisabled, setButtonDisabled] = React.useState(false);
+    useEffect(() => {
+        if(user.email.length>0 && user.password.length>0)
+            setButtonDisabled(false);
+        else
+            setButtonDisabled(true);
+    }, [user]);
 
     const onLogin = async () => {
-
+        try{
+            router.push("/profile");
+        }
+        catch(error: any){
+            console.error("Login failed:", error.message);
+        }
     }
 
     return (
@@ -23,7 +35,7 @@ function LoginPage() {
             <input 
                 className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-white"
                 id="email"
-                type="text"
+                type="email"
                 value={user.email}
                 onChange={(e) => setUser({...user, email: e.target.value})}
                 placeholder="email"
@@ -39,11 +51,10 @@ function LoginPage() {
             />
             <button
                 onClick={onLogin}
+                disabled={buttonDisabled}
                 className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
-            >Login</button>
+            >{buttonDisabled ? "No Login" : "Login"}</button>
             <Link href="/signup">New user? Signup here.</Link>
         </div>
     );
 }
-
-export default LoginPage;

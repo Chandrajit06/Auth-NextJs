@@ -1,22 +1,21 @@
 import { connect } from "@/dbConfig/dbConfig";
-import User from "@/models/UserModel"
+import User from "@/models/userModel"
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 
-connect()
-
 export async function POST(request: NextRequest){
     try{
+        await connect();
         const reqBody = await request.json();
         const {username, email, password} = reqBody;
         console.log(reqBody);
 
+        if (!username || !email || !password)
+            return NextResponse.json({ error: "All fields are required" }, { status: 400 });
+
         const user = await User.findOne({email});
         if(user)
             return NextResponse.json({error: "User already exists"}, {status: 400});
-
-        if (!username || !email || !password)
-            return NextResponse.json({ error: "All fields are required" }, { status: 400 });
 
         const salt = await bcryptjs.genSalt(10);
         const hashedPassword = await bcryptjs.hash(password, salt);
@@ -30,7 +29,7 @@ export async function POST(request: NextRequest){
         console.log(savedUser);
 
         return NextResponse.json({
-            message: "Usre created successfully",
+            message: "User created successfully",
             success: true,
             user: {id: savedUser._id, username: savedUser.username, email: savedUser.email}, 
         })
