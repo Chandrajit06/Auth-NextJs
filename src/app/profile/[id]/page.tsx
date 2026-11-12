@@ -1,4 +1,4 @@
-async function ProfileIdPage({params}: any){
+export default async function ProfileIdPage({params}: any){
     const {id} = await params;
     return(
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
@@ -10,5 +10,3 @@ async function ProfileIdPage({params}: any){
         </div>
     )
 }
-
-export default ProfileIdPage;
