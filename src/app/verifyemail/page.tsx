@@ -16,7 +16,7 @@ export default function VerifyEmailPage() {
         }
         catch(error: any){
             setError(true);
-            console.log(error.response.data);
+            // console.log(error.response.data);
         }
     }
 

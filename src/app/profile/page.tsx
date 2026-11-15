@@ -19,7 +19,7 @@ export default function ProfilePage(){
     const [data, setData] = React.useState("");
     const getUserDetails = async () => {
         const res = await axios.get("/api/users/me");
-        console.log(res);
+        // console.log(res);
         setData(res.data.data._id);
     }
 

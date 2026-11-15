@@ -9,7 +9,7 @@ export async function POST(request: NextRequest){
         await connect();
         const reqBody = await request.json();
         const {username, email, password} = reqBody;
-        console.log(reqBody);
+        // console.log(reqBody);
 
         if (!username || !email || !password)
             return NextResponse.json({ error: "All fields are required" }, { status: 400 });
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest){
             password: hashedPassword,
         })
         const savedUser = await newUser.save();
-        console.log(savedUser);
+        // console.log(savedUser);
 
         // Send verification email
         // await sendEmail({email, emailType: "VERIFY", userId: savedUser._id});

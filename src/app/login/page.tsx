@@ -25,12 +25,12 @@ export default function LoginPage() {
             setLoading(true);
             setError("");
             const response = await axios.post("/api/users/login", user);
-            console.log("Login response:", response.data);
+            // console.log("Login response:", response.data);
             router.push("/profile");
         }
         catch(error : any) {
             setError("Invalid email or password");
-            console.log("Login failed:", error.message);
+            // console.log("Login failed:", error.message);
         }
         finally{
             setLoading(false);
